@@ -20,7 +20,7 @@ void _start(void)
 
     gfx_fill_rect(0, 0, wi.client_w, 60, 0x4040A0);
     gfx_draw_text(24, 20, "LuminaOS", 0xFFFFFF);
-    gfx_draw_text(24 + 9 * 8, 20, "v0.7.0", 0xD0D0FF);
+    gfx_draw_text(24 + 9 * 8, 20, "v0.7.1", 0xD0D0FF);
     gfx_fill_rect(0, 60, wi.client_w, 2, 0x202060);
 
     int y = 90;
