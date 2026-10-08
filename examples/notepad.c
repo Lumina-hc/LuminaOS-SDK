@@ -1,12 +1,5 @@
 #include <app_libc.h>
 
-static int n_strlen(const char* s)
-{
-    int n = 0;
-    while (s[n]) n++;
-    return n;
-}
-
 static int n_line_start(const char* text, int len, int max_chars, int line)
 {
     int ln = 0;

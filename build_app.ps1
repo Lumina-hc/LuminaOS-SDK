@@ -1,7 +1,7 @@
 param(
     [Parameter(Mandatory = $true)][string]$Source,
     [string]$OutputDir = ".",
-    [string]$GccPrefix = "i686-elf"
+    [string]$GccPrefix = "x86_64-elf"
 )
 
 $ErrorActionPreference = "Stop"
@@ -17,33 +17,23 @@ $outDir = [System.IO.Path]::GetFullPath($OutputDir)
 New-Item -ItemType Directory -Path $outDir -Force | Out-Null
 
 $obj = Join-Path $work "$name.o"
-$elf = Join-Path $work "$name.elf"
-$bin = Join-Path $work "$name.bin"
-$lsp = Join-Path $outDir "$name.lsp"
+$elf = Join-Path $outDir "$name.elf"
 
-$acflags = "-ffreestanding", "-nostdlib", "-fno-pic", "-fno-stack-protector", "-I$sdkRoot\include", "-m32", "-O2", "-c"
+$acflags = "-ffreestanding", "-nostdlib", "-fno-pic", "-fno-pie", "-fno-stack-protector", "-I$sdkRoot\include", "-m64", "-mno-red-zone", "-mgeneral-regs-only", "-mno-mmx", "-mno-80387", "-Wall", "-O2", "-c"
+$prevEap = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
 & "$GccPrefix-gcc" @acflags $src -o $obj
-if ($LASTEXITCODE -ne 0) { exit 1 }
+$gccCode = $LASTEXITCODE
+$ErrorActionPreference = $prevEap
+if ($gccCode -ne 0) { Write-Host "gcc failed: $Source" -ForegroundColor Red; exit 1 }
 
-& "$GccPrefix-ld" -T "$sdkRoot\app.ld" -o $elf $obj
-if ($LASTEXITCODE -ne 0) { exit 1 }
+$ErrorActionPreference = "Continue"
+& "$GccPrefix-ld" -T "$sdkRoot\elf.ld" -o $elf $obj
+$ldCode = $LASTEXITCODE
+$ErrorActionPreference = $prevEap
+if ($ldCode -ne 0) { Write-Host "ld failed: $Source" -ForegroundColor Red; exit 1 }
 
-& "$GccPrefix-objcopy" -O binary $elf $bin
-$code = [IO.File]::ReadAllBytes($bin)
-
-$nm = & "$GccPrefix-nm" $elf | Select-String " _start$" | Select-Object -First 1
-$entry = 0x10
-if ($nm -and $nm.ToString() -match '^\s*([0-9a-fA-F]+)') {
-    $entry = [Convert]::ToUInt32($Matches[1], 16) - 0x01000000
-}
-
-$hdr = [byte[]]::new(16)
-$hdr[0] = 0x4C; $hdr[1] = 0x53; $hdr[2] = 0x50; $hdr[3] = 1
-$e = [BitConverter]::GetBytes([uint32]$entry); [Array]::Copy($e, 0, $hdr, 4, 4)
-$l = [BitConverter]::GetBytes([uint32]$code.Length); [Array]::Copy($l, 0, $hdr, 8, 4)
-$b = [BitConverter]::GetBytes([uint32]0); [Array]::Copy($b, 0, $hdr, 12, 4)
-$img = $hdr + $code
-[IO.File]::WriteAllBytes($lsp, $img)
+$elfData = [IO.File]::ReadAllBytes($elf)
+Write-Host "Built $name.elf ($($elfData.Length) B) -> $elf"
 
 Remove-Item $work -Recurse -Force -ErrorAction SilentlyContinue
-Write-Host "Built $name.lsp ($($img.Length) B) -> $lsp"
