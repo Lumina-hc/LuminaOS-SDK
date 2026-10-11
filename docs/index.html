@@ -97,7 +97,7 @@
 
     <div class="hero">
         <h1>Lumina<span>OS SDK</span></h1>
-        <p data-en="Everything you need to build applications for LuminaOS. Write in C, compile to LSP, deploy to the desktop." data-zh="构建 LuminaOS 应用所需的一切。用 C 编写，编译为 LSP，部署到桌面。">Everything you need to build applications for LuminaOS. Write in C, compile to LSP, deploy to the desktop.</p>
+        <p data-en="Everything you need to build applications for LuminaOS. Write in C, compile to ELF64, deploy to the desktop." data-zh="构建 LuminaOS 应用所需的一切。用 C 编写，编译为 ELF64，部署到桌面。">Everything you need to build applications for LuminaOS. Write in C, compile to ELF64, deploy to the desktop.</p>
         <a href="https://github.com/Lumina-hc/LuminaOS-SDK" class="btn btn-primary" data-en="View on GitHub" data-zh="GitHub 查看">View on GitHub</a>
         <a href="#build" class="btn btn-outline" data-en="Get Started" data-zh="快速开始">Get Started</a>
     </div>
@@ -122,8 +122,8 @@
                 <p data-en="Window info, close detection, and cursor management." data-zh="窗口信息、关闭检测和光标管理。">Window info, close detection, and cursor management.</p>
             </div>
             <div class="feature">
-                <h3 data-en="LSP Format" data-zh="LSP 格式">LSP Format</h3>
-                <p data-en="Compact 16-byte header binary format loaded by the kernel." data-zh="紧凑的 16 字节头二进制格式，由内核加载。">Compact 16-byte header binary format loaded by the kernel.</p>
+                <h3 data-en="ELF64 Format" data-zh="ELF64 格式">ELF64 Format</h3>
+                <p data-en="Raw ELF64 executables linked with the bundled scripts and loaded by the kernel." data-zh="使用附带的链接脚本生成的 ELF64 可执行文件，由内核加载。">Raw ELF64 executables linked with the bundled scripts and loaded by the kernel.</p>
             </div>
             <div class="feature">
                 <h3 data-en="Example Apps" data-zh="示例应用">Example Apps</h3>
@@ -174,10 +174,10 @@
         <h2 data-en="Quick Start" data-zh="快速开始">Quick Start</h2>
         <div class="install-steps">
             <ol>
-                <li data-en="Install dependencies:" data-zh="安装依赖：">Install dependencies: <code>NASM</code> <code>i686-elf-gcc</code></li>
+                <li data-en="Install dependencies:" data-zh="安装依赖：">Install dependencies: <code>NASM</code> <code>x86_64-elf-gcc</code></li>
                 <li data-en="Clone the repository:" data-zh="克隆仓库：">Clone the repository: <code>git clone https://github.com/Lumina-hc/LuminaOS-SDK.git</code></li>
                 <li data-en="Build an example:" data-zh="构建示例：">Build an example: <code>.\build_app.ps1 -Source examples\notepad.c -OutputDir out</code></li>
-                <li data-en="Deploy: copy the .lsp file to the LuminaOS data disk (hdd.img)." data-zh="部署：将 .lsp 文件复制到 LuminaOS 数据盘 (hdd.img)。">Deploy: copy the .lsp file to the LuminaOS data disk (hdd.img).</li>
+                <li data-en="Deploy: copy the .elf file to the LuminaOS data disk (hdd.img)." data-zh="部署：将 .elf 文件复制到 LuminaOS 数据盘 (hdd.img)。">Deploy: copy the .elf file to the LuminaOS data disk (hdd.img).</li>
                 <li data-en="Boot LuminaOS and click the icon to run." data-zh="启动 LuminaOS，点击图标运行。">Boot LuminaOS and click the icon to run.</li>
             </ol>
         </div>
