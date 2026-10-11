@@ -57,16 +57,22 @@ void _start(void)
     int per_col = (wi.client_h - y0 - 10) / 48;
     if (per_col < 1) per_col = 1;
 
-    int last_mx = -1;
-    int last_my = -1;
+    int last_hover = -2;
 
     for (;;) {
         int mx = mouse_x() - wi.client_x;
         int my = mouse_y() - wi.client_y;
 
-        int dirty = (mx != last_mx || my != last_my);
-        last_mx = mx;
-        last_my = my;
+        int hover = -1;
+        for (int i = 0; i < count; i++) {
+            int col = i / per_col;
+            int row = i % per_col;
+            int x = x0 + col * item_w;
+            int y = y0 + row * 48;
+            if (mx >= x && mx < x + 40 && my >= y && my < y + 32) { hover = i; break; }
+        }
+        int dirty = (hover != last_hover);
+        last_hover = hover;
 
         if (dirty) {
             gfx_clear(0xF7F7F7);

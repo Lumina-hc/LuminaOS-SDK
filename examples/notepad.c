@@ -134,8 +134,7 @@ void _start(void)
     int save_h = 24;
 
     int scroll = 0;
-    int last_mx = -1;
-    int last_my = -1;
+    int last_over_save = -1;
 
     int sb_h = wi.client_h - content_y - 8;
     int sb_x = wi.client_w - 14;
@@ -144,9 +143,9 @@ void _start(void)
         int mx = mouse_x() - wi.client_x;
         int my = mouse_y() - wi.client_y;
 
-        int dirty = (mx != last_mx || my != last_my || saved_feedback != 0);
-        last_mx = mx;
-        last_my = my;
+        int over_save_now = (mx >= save_x && mx < save_x + save_w && my >= save_y && my < save_y + save_h);
+        int dirty = (over_save_now != last_over_save || saved_feedback != 0);
+        last_over_save = over_save_now;
 
         int close = 0;
         int k;
