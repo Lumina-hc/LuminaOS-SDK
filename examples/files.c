@@ -60,6 +60,11 @@ void _start(void)
     int last_hover = -2;
 
     for (;;) {
+        if (sys_win_minimized()) {
+            sys_minimize();
+            last_hover = -2;
+        }
+
         int mx = mouse_x() - wi.client_x;
         int my = mouse_y() - wi.client_y;
 

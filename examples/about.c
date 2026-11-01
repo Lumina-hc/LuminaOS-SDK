@@ -11,7 +11,7 @@ static void draw_centered(int y, const char* s)
     gfx_draw_text(x, y, s, 0x202020);
 }
 
-void _start(void)
+static void render(void)
 {
     win_info_t wi;
     sys_win_info(&wi);
@@ -20,13 +20,13 @@ void _start(void)
 
     gfx_fill_rect(0, 0, wi.client_w, 60, 0x4040A0);
     gfx_draw_text(24, 20, "LuminaOS", 0xFFFFFF);
-    gfx_draw_text(24 + 9 * 8, 20, "v0.7.1", 0xD0D0FF);
+    gfx_draw_text(24 + 9 * 8, 20, "v0.7.5", 0xD0D0FF);
     gfx_fill_rect(0, 60, wi.client_w, 2, 0x202060);
 
     int y = 90;
-    draw_centered(y, "A small 32-bit operating system"); y += 30;
+    draw_centered(y, "A small hobby operating system"); y += 30;
     draw_centered(y, "built for learning and fun."); y += 44;
-    draw_centered(y, "Architecture : i686 (32-bit)"); y += 22;
+    draw_centered(y, "Architecture : x86_64 (64-bit)"); y += 22;
     draw_centered(y, "Kernel       : Hybrid"); y += 22;
     draw_centered(y, "Filesystem   : FAT16"); y += 22;
     draw_centered(y, "GUI          : Lumina Desktop"); y += 44;
@@ -34,8 +34,17 @@ void _start(void)
     gfx_draw_text(24, wi.client_h - 30, "Close with Esc or the X button", 0x808080);
 
     gfx_flush();
+}
+
+void _start(void)
+{
+    render();
 
     for (;;) {
+        if (sys_win_minimized()) {
+            sys_minimize();
+            render();
+        }
         sys_cursor();
         if (sys_win_should_close())
             break;

@@ -147,6 +147,11 @@ void _start(void)
         int dirty = (over_save_now != last_over_save || saved_feedback != 0);
         last_over_save = over_save_now;
 
+        if (sys_win_minimized()) {
+            sys_minimize();
+            dirty = 1;
+        }
+
         int close = 0;
         int k;
         while ((k = getchar_nb()) != -1) {

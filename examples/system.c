@@ -32,7 +32,7 @@ static void draw_row(int y, const char* label, uint32_t free_kb, uint32_t used_k
     gfx_draw_text(bar_x + (bar_w - 20) + 12, y + 2, "free KB", 0x808080);
 }
 
-void _start(void)
+static void render(void)
 {
     win_info_t wi;
     sys_win_info(&wi);
@@ -80,8 +80,17 @@ void _start(void)
     gfx_draw_text(24, h - 30, "Close with Esc or the X button", 0x808080);
 
     gfx_flush();
+}
+
+void _start(void)
+{
+    render();
 
     for (;;) {
+        if (sys_win_minimized()) {
+            sys_minimize();
+            render();
+        }
         sys_cursor();
         if (sys_win_should_close())
             break;

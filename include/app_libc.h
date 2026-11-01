@@ -30,6 +30,19 @@
 #define SYSCALL_WIN_SHOULD_CLOSE 24
 #define SYSCALL_OPEN_FILE       25
 #define SYSCALL_GET_OPEN_FILE   26
+#define SYSCALL_WIN_MINIMIZED   27
+#define SYSCALL_MINIMIZE        28
+#define SYSCALL_COUNT           40
+#define SYSCALL_PIPE            30
+#define SYSCALL_PIPE_READ       31
+#define SYSCALL_PIPE_WRITE      32
+#define SYSCALL_CLOSE           33
+#define SYSCALL_SPAWN           34
+#define SYSCALL_GETARG          35
+#define SYSCALL_GETPID          36
+#define SYSCALL_WAIT            37
+#define SYSCALL_LIST_PROCS      38
+#define SYSCALL_YIELD           39
 
 typedef struct {
     int win_x, win_y, win_w, win_h;
@@ -90,5 +103,18 @@ static inline void sys_sysinfo(sysinfo_t* info) { syscall5(SYSCALL_SYSINFO, (lon
 static inline int sys_win_should_close(void) { return syscall5(SYSCALL_WIN_SHOULD_CLOSE, 0, 0, 0, 0); }
 static inline void sys_open_file(const char* p) { syscall5(SYSCALL_OPEN_FILE, (long)p, 0, 0, 0); }
 static inline int sys_get_open_file(char* p, int max) { return (int)syscall5(SYSCALL_GET_OPEN_FILE, (long)p, 0, max, 0); }
+static inline int sys_win_minimized(void) { return (int)syscall5(SYSCALL_WIN_MINIMIZED, 0, 0, 0, 0); }
+static inline void sys_minimize(void) { syscall5(SYSCALL_MINIMIZE, 0, 0, 0, 0); }
+
+static inline int sys_pipe(int fds[2]) { return syscall5(SYSCALL_PIPE, (long)fds, 0, 0, 0); }
+static inline int sys_pipe_read(int fd, void* buf, int len) { return syscall5(SYSCALL_PIPE_READ, (long)fd, (long)buf, (long)len, 0); }
+static inline int sys_pipe_write(int fd, const void* buf, int len) { return syscall5(SYSCALL_PIPE_WRITE, (long)fd, (long)buf, (long)len, 0); }
+static inline int sys_close(int fd) { return syscall5(SYSCALL_CLOSE, (long)fd, 0, 0, 0); }
+static inline int sys_spawn(const char* path, const char* name, int arg) { return syscall5(SYSCALL_SPAWN, (long)path, (long)name, (long)arg, 0); }
+static inline int sys_getarg(void) { return syscall5(SYSCALL_GETARG, 0, 0, 0, 0); }
+static inline int sys_getpid(void) { return syscall5(SYSCALL_GETPID, 0, 0, 0, 0); }
+static inline int sys_wait(int pid, int* code) { return syscall5(SYSCALL_WAIT, (long)pid, (long)code, 0, 0); }
+static inline int sys_list_procs(void) { return syscall5(SYSCALL_LIST_PROCS, 0, 0, 0, 0); }
+static inline int sys_yield(void) { return syscall5(SYSCALL_YIELD, 0, 0, 0, 0); }
 
 #endif
