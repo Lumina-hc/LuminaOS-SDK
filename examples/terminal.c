@@ -294,7 +294,7 @@ void _start(void)
     if (cols < 8) cols = 8;
     if (rows < 2) rows = 2;
 
-    add_line("LuminaOS Terminal v0.8");
+    add_line("LuminaOS Terminal v0.7.5");
     add_line("Type 'help' for a list of commands.");
     add_line("");
 
