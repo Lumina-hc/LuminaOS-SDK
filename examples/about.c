@@ -18,12 +18,7 @@ static void render(void)
 
     gfx_clear(0xF7F7F7);
 
-    gfx_fill_rect(0, 0, wi.client_w, 60, 0x4040A0);
-    gfx_draw_text(24, 20, "LuminaOS", 0xFFFFFF);
-    gfx_draw_text(24 + 9 * 8, 20, "v0.7.5", 0xD0D0FF);
-    gfx_fill_rect(0, 60, wi.client_w, 2, 0x202060);
-
-    int y = 90;
+    int y = 24;
     draw_centered(y, "A small hobby operating system"); y += 30;
     draw_centered(y, "built for learning and fun."); y += 44;
     draw_centered(y, "Architecture : x86_64 (64-bit)"); y += 22;

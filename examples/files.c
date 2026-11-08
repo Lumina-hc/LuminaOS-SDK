@@ -49,7 +49,7 @@ void _start(void)
     dir_entry_t entries[64];
     int count = file_list(entries, sizeof(entries));
 
-    int y0 = 48;
+    int y0 = 16;
     int item_w = 460;
     int cols = (wi.client_w - 32) / item_w;
     if (cols < 1) cols = 1;
@@ -81,10 +81,6 @@ void _start(void)
 
         if (dirty) {
             gfx_clear(0xF7F7F7);
-            gfx_fill_rect(0, 0, wi.client_w, 32, 0x4040A0);
-            gfx_draw_text(16, 8, "Files - Current Directory", 0xFFFFFF);
-            gfx_fill_rect(0, 32, wi.client_w, 2, 0x202060);
-
             if (count <= 0) {
                 gfx_draw_text(24, y0, "(empty or filesystem unavailable)", 0x808080);
             } else {

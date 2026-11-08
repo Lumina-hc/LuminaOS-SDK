@@ -118,13 +118,12 @@ void _start(void)
     }
 
     int margin = 16;
-    int header_h = 36;
     int max_chars = (wi.client_w - margin - 20) / 8;
     if (max_chars < 8) max_chars = 8;
     if (max_chars > 160) max_chars = 160;
 
     int row_h = 16;
-    int content_y = header_h + 8;
+    int content_y = 36;
     int visible = (wi.client_h - content_y - 18) / row_h;
     if (visible < 1) visible = 1;
 
@@ -263,10 +262,6 @@ void _start(void)
             int crow, ccol;
             n_caret_row_col(max_chars, &crow, &ccol);
             if (scroll > max_scroll) scroll = max_scroll;
-
-            gfx_fill_rect(0, 0, wi.client_w, header_h, 0x4040A0);
-            gfx_draw_text(12, 10, has_name ? name : "Notepad", 0xFFFFFF);
-            gfx_fill_rect(0, header_h, wi.client_w, 2, 0x202060);
 
             int over_save = (mx >= save_x && mx < save_x + save_w && my >= save_y && my < save_y + save_h);
             gfx_fill_rect(save_x, save_y, save_w, save_h, over_save ? 0x8090D0 : 0x5664B0);

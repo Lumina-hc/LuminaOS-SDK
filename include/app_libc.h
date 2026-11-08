@@ -48,6 +48,7 @@ typedef struct {
     int win_x, win_y, win_w, win_h;
     int client_x, client_y, client_w, client_h;
     int close_x, close_y, close_w, close_h;
+    int min_x, min_y, min_w, min_h;
 } win_info_t;
 
 typedef struct {

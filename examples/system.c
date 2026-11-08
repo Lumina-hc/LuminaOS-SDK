@@ -41,11 +41,7 @@ static void render(void)
 
     gfx_clear(0xF7F7F7);
 
-    gfx_fill_rect(0, 0, w, 32, 0x4040A0);
-    gfx_draw_text(16, 8, "System Monitor", 0xFFFFFF);
-    gfx_fill_rect(0, 32, w, 2, 0x202060);
-
-    int y = 60;
+    int y = 20;
     sysinfo_t si;
     sys_sysinfo(&si);
 

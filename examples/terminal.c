@@ -6,8 +6,6 @@
 #define LINE_W 200
 
 #define COL_BG     0x0C0E14
-#define COL_HDR1   0x1B2438
-#define COL_HDR2   0x0F1522
 #define COL_TEXT   0xD8E0F0
 #define COL_PROMPT 0x4CFF9F
 #define COL_DIM    0x8A93A6
@@ -249,18 +247,7 @@ static void render(win_info_t* wi, int cols, int rows)
 {
     gfx_clear(COL_BG);
 
-    /* header */
-    for (int y = 0; y < 30; y++) {
-        int t = (y * 255) / 29;
-        int r = ((COL_HDR1 >> 16) & 0xFF) + ((((COL_HDR2 >> 16) & 0xFF) - ((COL_HDR1 >> 16) & 0xFF)) * t / 255);
-        int g = ((COL_HDR1 >> 8) & 0xFF) + ((((COL_HDR2 >> 8) & 0xFF) - ((COL_HDR1 >> 8) & 0xFF)) * t / 255);
-        int b = (COL_HDR1 & 0xFF) + (((COL_HDR2 & 0xFF) - (COL_HDR1 & 0xFF)) * t / 255);
-        gfx_fill_rect(0, y, wi->client_w, 1, (r << 16) | (g << 8) | b);
-    }
-    gfx_fill_rect(0, 30, wi->client_w, 2, COL_ACCENT);
-    gfx_draw_text(12, 7, "Terminal - Lumina Shell", COL_TEXT);
-
-    int top = 40;
+    int top = 8;
     int visible = rows - 1;
     if (visible < 1) visible = 1;
     int first = g_nlines - visible;
